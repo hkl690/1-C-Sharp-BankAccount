@@ -18,10 +18,6 @@ namespace MySuperBank
 
             Console.WriteLine(account.GetAccountHistory());
 
-
-
-
-
             // Test for a negative balance.
             try
             {
@@ -34,7 +30,7 @@ namespace MySuperBank
             }
 
             // Test that the initial balances must be positive.
-            //BankAccount invalidAccount;
+            //BankAccount invalidAccount; was in example but not needed
             try
             {
                 var invalidAccount = new BankAccount("invalid", -55);
@@ -43,11 +39,35 @@ namespace MySuperBank
             {
                 Console.WriteLine("Exception caught creating account with negative balance");
                 Console.WriteLine(e.ToString());
-                // return;
+                // return; was in example but not needed
             }
 
             account.MakeWithdrawal(50, DateTime.Now, "Groceries");
             Console.WriteLine($"Your balance is now ${account.Balance}.");
+            Console.WriteLine("");
+
+            Console.WriteLine($"Account {account.Number} for {account.Owner}:");
+            Console.WriteLine(account.GetAccountHistory());
+
+            // <GiftCardAccount and InterestEarningAccount tests>
+            var giftCard = new GiftCardAccount("Gift card", 100, 50);
+            Console.WriteLine($"Gift Card Account:");
+            giftCard.MakeWithdrawal(20, DateTime.Now, "Coffees");
+            giftCard.MakeWithdrawal(50, DateTime.Now, "Groceries");
+            giftCard.PerformMonthEndTransactions();
+            // can make additional deposits:
+            giftCard.MakeDeposit(27.50m, DateTime.Now, "Add some additional funds");
+            Console.WriteLine(giftCard.GetAccountHistory());
+
+            var savings = new InterestEarningAccount("Savings account", 10000);
+            Console.WriteLine($"Interest Earnings Account:");
+            savings.MakeDeposit(750, DateTime.Now, "Save some money");
+            savings.MakeDeposit(1250, DateTime.Now, "Add more savings");
+            savings.MakeWithdrawal(250, DateTime.Now, "Paying monthly bills");
+            savings.PerformMonthEndTransactions();
+            Console.WriteLine(savings.GetAccountHistory());
+            // </GiftCardAccount and InterestEarningAccount tests>
+
 
         }
 
