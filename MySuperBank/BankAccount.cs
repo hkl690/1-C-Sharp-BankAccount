@@ -26,19 +26,39 @@ namespace MySuperBank
         private List<Transaction> allTransactions = new List<Transaction>();
 
                        
-        public BankAccount(string name)
+        public BankAccount(string name, decimal initialBalance)
         {
             this.Owner = name;
+
+            MakeDeposit(initialBalance, DateTime.Now, "Initial Balance");
+
+
             this.Number = accountNumberSeed.ToString();
             accountNumberSeed++;
         }
 
         public void MakeDeposit(decimal amount, DateTime date, string note)
         {
+            if (amount <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(amount), "Amount of deposit must be positive");
+            }
+            var deposit = new Transaction(amount, date, note);
+            allTransactions.Add(deposit);
         }
 
         public void MakeWithdrawal(decimal amount, DateTime date, string note)
         {
+            if (amount <= 0) // negative deposit error
+            {
+                throw new ArgumentOutOfRangeException(nameof(amount), "Amount of withdrawal must be positive");
+            }
+            if (Balance - amount < 0) // overdraft error
+            {
+                throw new InvalidOperationException("Not sufficient funds for this withdrawal");
+            }
+            var withdrawal = new Transaction(-amount, date, note);
+            allTransactions.Add(withdrawal);
         }
     }
 }
