@@ -13,3 +13,4 @@ namespace MySuperBank
 }
 
 // https://www.youtube.com/watch?v=xLhm3bEG__c&list=PLdo4fOcmZ0oVxKLQCHpiUWun7vlJJvUiN&index=17
+// https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/tutorials/classes
